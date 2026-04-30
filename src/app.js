@@ -121,6 +121,7 @@ function setHtml(html) {
         </a>
         <nav class="nav-actions">
           <a class="button ghost" href="/" data-link>Home</a>
+          <a class="button ghost" href="#demo-video">Demo video</a>
           <button class="button ghost" data-demo-room>Load demo</button>
           <button class="button secondary" data-reset-prototype>Reset</button>
           <a class="button secondary" href="/create" data-link>Create room</a>
@@ -246,16 +247,16 @@ function renderHome() {
     <main class="page">
       <section class="hero">
         <div class="hero-copy">
-          <div class="eyebrow">Private focus rooms for friends</div>
+          <div class="eyebrow">Lock in or lose out.</div>
           <h1><span>The</span> Stakeout</h1>
-          <p class="lede">Compete with your friends to actually study. Set your stakes, pair your phone, keep cameras on, and let the scoreboard call out every distraction.</p>
+          <p class="lede">Compete with your friends to actually study. Set your stakes, pair your phone, and let the scoreboard call out every distraction.</p>
           <form class="join-box" data-join-form>
             <input name="code" maxlength="16" placeholder="Enter room code" aria-label="Room code" />
             <button class="button primary" type="submit">Join</button>
           </form>
           <div class="button-row">
             <a class="button primary" href="/create" data-link>Create Room</a>
-            <button class="button secondary" data-demo-room>Try demo room</button>
+            <a class="button secondary" href="#demo-video">Watch demo video</a>
           </div>
         </div>
         <div class="hero-visual" aria-label="Live focus competition preview">
@@ -300,6 +301,13 @@ function renderHome() {
         <article class="card"><h3>1. Set your stakes</h3><p class="muted small">Keep it informal: coffee, boba, chores, or a group selfie penalty.</p></article>
         <article class="card"><h3>2. Pair your phone</h3><p class="muted small">Open the companion page and leave the phone face down and still.</p></article>
         <article class="card"><h3>3. Stay visible</h3><p class="muted small">Cameras, scores, and event history stay live until the timer ends.</p></article>
+      </section>
+      <section class="demo-video-panel" id="demo-video">
+        <div>
+          <div class="eyebrow">Demo video</div>
+          <h2>See the room in motion.</h2>
+        </div>
+        <a class="button primary" href="#demo-video">Video slot ready</a>
       </section>
     </main>
   `);
