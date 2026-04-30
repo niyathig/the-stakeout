@@ -1,27 +1,33 @@
 const store = globalThis.__stakeoutRoomsStore || { rooms: {} };
 globalThis.__stakeoutRoomsStore = store;
 
-export default async function handler(req, res) {
-  res.setHeader("Cache-Control", "no-store");
+module.exports = async function handler(req, res) {
+  try {
+    res.setHeader("Cache-Control", "no-store");
 
-  if (req.method === "GET") {
-    res.status(200).json(store.rooms);
-    return;
-  }
-
-  if (req.method === "PUT") {
-    try {
-      const body = await readBody(req);
-      store.rooms = body && typeof body === "object" ? body : {};
-      res.status(200).json({ ok: true });
-    } catch {
-      res.status(400).json({ error: "Invalid JSON body" });
+    if (req.method === "GET") {
+      sendJson(res, 200, store.rooms);
+      return;
     }
-    return;
-  }
 
-  res.setHeader("Allow", "GET, PUT");
-  res.status(405).json({ error: "Method not allowed" });
+    if (req.method === "PUT") {
+      const body = await readBody(req);
+      store.rooms = body && typeof body === "object" && !Array.isArray(body) ? body : {};
+      sendJson(res, 200, { ok: true });
+      return;
+    }
+
+    res.setHeader("Allow", "GET, PUT");
+    sendJson(res, 405, { error: "Method not allowed" });
+  } catch (error) {
+    sendJson(res, 500, { error: "Room API failed", detail: error.message });
+  }
+};
+
+function sendJson(res, statusCode, payload) {
+  res.statusCode = statusCode;
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.end(JSON.stringify(payload));
 }
 
 async function readBody(req) {
