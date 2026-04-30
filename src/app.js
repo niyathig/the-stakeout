@@ -405,13 +405,16 @@ function renderJoin(code) {
   }
   setHtml(`
     <main class="page">
-      <section class="panel">
-        <div class="eyebrow">Join ${escapeHtml(room.name)}</div>
-        <h2>Pick a display name.</h2>
-        <form class="form" data-join-room>
-          <div class="field"><label for="displayName">Display name</label><input id="displayName" name="displayName" required placeholder="${initialNames[room.players.length] || "Friend"}" /></div>
-          <button class="button primary" type="submit">Enter lobby</button>
-        </form>
+      <section class="join-layout">
+        <div class="panel">
+          <div class="eyebrow">Join ${escapeHtml(room.name)}</div>
+          <h2>Pick a display name.</h2>
+          <form class="form" data-join-room>
+            <div class="field"><label for="displayName">Display name</label><input id="displayName" name="displayName" required placeholder="${initialNames[room.players.length] || "Friend"}" /></div>
+            <button class="button primary" type="submit">Enter lobby</button>
+          </form>
+        </div>
+        ${scoreRulesCard()}
       </section>
     </main>
   `);
@@ -475,6 +478,7 @@ function renderRoom(roomId) {
           <div class="copy-code"><span>${room.code}</span><button class="icon-button" title="Copy invite link" data-copy="${inviteUrl}">${icons.copy}</button></div>
           <div class="card" style="margin-top: 14px"><h3>Set your stakes</h3><p class="muted">${escapeHtml(room.stakesText)}</p></div>
           <div class="card" style="margin-top: 14px"><h3>Duration</h3><p class="muted">${room.durationMinutes} minutes · ${breakLabel(room.breakMode)}</p></div>
+          ${scoreRulesCard("compact")}
           <h3 style="margin-top: 16px">Phone pairing</h3>
           <div class="qr">
             <img src="${qrCodeUrl(shortPhoneUrl || phoneUrl)}" alt="QR code for phone pairing link" />
@@ -532,6 +536,32 @@ function bindRoomActions(room, localPlayer) {
     });
     render();
   });
+}
+
+function scoreRulesCard(mode = "full") {
+  const rules = [
+    ["Start", "1000", "Everyone begins even."],
+    ["Small movement", "0", "First warning only."],
+    ["Phone moved", "-50", "One penalty every 30 seconds."],
+    ["Phone pickup", "-100", "Strong movement during focus."],
+    ["Phone disconnect", "-100", "Heartbeat lost for 20 seconds."],
+    ["Camera off", "-100", "Off for more than 10 seconds."],
+    ["Leave session", "-250", "Leaving before timer ends."],
+    ["Clean finish", "+50", "No penalties by the end."],
+  ];
+  return `
+    <article class="card score-rules ${mode === "compact" ? "score-rules-compact" : ""}">
+      <div>
+        <div class="eyebrow">Scoring</div>
+        <h3>How points move</h3>
+      </div>
+      <div class="score-rule-list">
+        ${rules
+          .map(([label, delta, detail]) => `<div class="score-rule"><span class="${Number(delta) < 0 ? "bad" : Number(delta) > 0 ? "good" : "neutral"}">${delta}</span><div><strong>${label}</strong><p class="small muted">${detail}</p></div></div>`)
+          .join("")}
+      </div>
+    </article>
+  `;
 }
 
 function toggleReady(roomId, playerId) {

@@ -406,6 +406,7 @@ h3 {
 }
 
 .section-grid,
+.join-layout,
 .room-layout,
 .session-layout,
 .end-layout {
@@ -462,6 +463,11 @@ h3 {
   color: var(--ink);
 }
 
+.join-layout {
+  align-items: start;
+  grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1.1fr);
+}
+
 .room-layout {
   grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
 }
@@ -489,6 +495,63 @@ h3 {
 
 .card {
   padding: 16px;
+}
+
+.score-rules {
+  background:
+    linear-gradient(135deg, rgba(217, 255, 99, 0.24), transparent 36%),
+    rgba(255, 255, 255, 0.78);
+  display: grid;
+  gap: 16px;
+}
+
+.score-rules-compact {
+  margin-top: 14px;
+}
+
+.score-rule-list {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.score-rules-compact .score-rule-list {
+  grid-template-columns: 1fr;
+}
+
+.score-rule {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.62);
+  border: 2px solid rgba(7, 7, 7, 0.14);
+  border-radius: 14px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 64px minmax(0, 1fr);
+  padding: 10px;
+}
+
+.score-rule > span {
+  align-items: center;
+  border-radius: 12px;
+  display: inline-flex;
+  font-weight: 950;
+  height: 42px;
+  justify-content: center;
+}
+
+.score-rule > span.good {
+  background: #d9ffdf;
+  color: #095a35;
+}
+
+.score-rule > span.bad {
+  background: #ffd7df;
+  color: #8c1030;
+}
+
+.score-rule > span.neutral {
+  background: #ebe6ff;
+  color: #312764;
 }
 
 .form {
@@ -798,6 +861,7 @@ h3 {
 
 @media (max-width: 920px) {
   .hero,
+  .join-layout,
   .room-layout,
   .session-layout,
   .end-layout,
@@ -844,7 +908,8 @@ h3 {
   }
 
   .video-grid,
-  .segmented {
+  .segmented,
+  .score-rule-list {
     grid-template-columns: 1fr;
   }
 
