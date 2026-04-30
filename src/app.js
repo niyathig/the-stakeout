@@ -4,6 +4,7 @@ const HEARTBEAT_MS = 5000;
 const PHONE_TIMEOUT_MS = 20000;
 const CAMERA_TIMEOUT_MS = 10000;
 const MOTION_COOLDOWN_MS = 30000;
+const DEFAULT_PUBLIC_ORIGIN = "https://screensaver-entity-eclipse-symphony.trycloudflare.com";
 
 const initialNames = ["Ari", "Maya", "Dev", "Sam"];
 const app = document.querySelector("#app");
@@ -87,12 +88,24 @@ function getShareOrigin() {
     localStorage.setItem("stakeout.shareOrigin", location.origin);
     return location.origin;
   }
+  if (isLocalHost(location.hostname) && (!saved || isLocalOrigin(saved))) {
+    localStorage.setItem("stakeout.shareOrigin", DEFAULT_PUBLIC_ORIGIN);
+    return DEFAULT_PUBLIC_ORIGIN;
+  }
   return saved || location.origin;
 }
 
 function setShareOrigin(value) {
   const normalized = value.trim().replace(/\/$/, "");
   if (normalized) localStorage.setItem("stakeout.shareOrigin", normalized);
+}
+
+function isLocalHost(hostname) {
+  return hostname === "localhost" || hostname === "127.0.0.1";
+}
+
+function isLocalOrigin(value) {
+  return value.includes("localhost") || value.includes("127.0.0.1") || /^https?:\/\/172\./.test(value);
 }
 
 function writeLocal(data) {
