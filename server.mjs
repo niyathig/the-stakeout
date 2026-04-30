@@ -83,6 +83,13 @@ createServer(async (req, res) => {
     return;
   }
 
+  if (url.pathname.startsWith("/q/")) {
+    const token = decodeURIComponent(url.pathname.split("/").at(-1) || "");
+    res.writeHead(302, { Location: `/phone/${encodeURIComponent(token)}` });
+    res.end();
+    return;
+  }
+
   const requested = normalize(url.pathname).replace(/^(\.\.[/\\])+/, "");
   let filePath = join(root, requested === "/" ? "index.html" : requested);
 

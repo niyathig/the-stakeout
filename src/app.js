@@ -82,7 +82,12 @@ function readLocal() {
 }
 
 function getShareOrigin() {
-  return localStorage.getItem("stakeout.shareOrigin") || location.origin;
+  const saved = localStorage.getItem("stakeout.shareOrigin");
+  if (location.hostname.endsWith("trycloudflare.com") && saved !== location.origin) {
+    localStorage.setItem("stakeout.shareOrigin", location.origin);
+    return location.origin;
+  }
+  return saved || location.origin;
 }
 
 function setShareOrigin(value) {
@@ -427,6 +432,7 @@ function renderRoom(roomId) {
   const shareOrigin = getShareOrigin();
   const inviteUrl = `${shareOrigin}/join/${room.code}`;
   const phoneUrl = localPlayer ? `${shareOrigin}/phone/${localPlayer.pairingToken}` : "";
+  const shortPhoneUrl = localPlayer ? `${shareOrigin}/q/${localPlayer.pairingToken}` : "";
   setHtml(`
     <main class="page">
       <section class="room-layout">
@@ -458,9 +464,10 @@ function renderRoom(roomId) {
           <div class="card" style="margin-top: 14px"><h3>Duration</h3><p class="muted">${room.durationMinutes} minutes · ${breakLabel(room.breakMode)}</p></div>
           <h3 style="margin-top: 16px">Phone pairing</h3>
           <div class="qr">
-            <img src="${qrCodeUrl(phoneUrl)}" alt="QR code for phone pairing link" />
+            <img src="${qrCodeUrl(shortPhoneUrl || phoneUrl)}" alt="QR code for phone pairing link" />
           </div>
-          <p class="small muted">Open this on your phone: <br /><a href="${phoneUrl}">${phoneUrl}</a></p>
+          <p class="small muted">Scan or open this short link: <br /><a href="${shortPhoneUrl}">${shortPhoneUrl}</a></p>
+          <p class="small muted">Fallback: <a href="${phoneUrl}">${phoneUrl}</a></p>
           <div class="field" style="margin-top: 14px">
             <label for="shareOrigin">Phone URL base</label>
             <input id="shareOrigin" data-share-origin value="${escapeHtml(shareOrigin)}" placeholder="http://192.168.1.25:5173" />
