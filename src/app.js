@@ -457,7 +457,9 @@ function renderRoom(roomId) {
           <div class="card" style="margin-top: 14px"><h3>Set your stakes</h3><p class="muted">${escapeHtml(room.stakesText)}</p></div>
           <div class="card" style="margin-top: 14px"><h3>Duration</h3><p class="muted">${room.durationMinutes} minutes · ${breakLabel(room.breakMode)}</p></div>
           <h3 style="margin-top: 16px">Phone pairing</h3>
-          <div class="qr"><span>${icons.phone} Scan/open link</span></div>
+          <div class="qr">
+            <img src="${qrCodeUrl(phoneUrl)}" alt="QR code for phone pairing link" />
+          </div>
           <p class="small muted">Open this on your phone: <br /><a href="${phoneUrl}">${phoneUrl}</a></p>
           <div class="field" style="margin-top: 14px">
             <label for="shareOrigin">Phone URL base</label>
@@ -880,6 +882,10 @@ function breakLabel(mode) {
   if (mode === "pomodoro_25_5") return "25/5 Pomodoro";
   if (mode === "pomodoro_50_10") return "50/10 Long Pomodoro";
   return "No scheduled breaks";
+}
+
+function qrCodeUrl(value) {
+  return `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=12&data=${encodeURIComponent(value)}`;
 }
 
 function formatMs(ms) {

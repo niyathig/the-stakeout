@@ -641,10 +641,7 @@ h3 {
 .qr {
   align-items: center;
   aspect-ratio: 1;
-  background:
-    linear-gradient(90deg, #111 10px, transparent 10px) 0 0 / 24px 24px,
-    linear-gradient(#111 10px, transparent 10px) 0 0 / 24px 24px,
-    #fff;
+  background: #fff;
   border: 10px solid #fff;
   border-radius: 18px;
   box-shadow: 0 0 0 2px var(--ink), 0 14px 0 rgba(7, 7, 7, 0.1);
@@ -655,14 +652,13 @@ h3 {
   width: 100%;
 }
 
-.qr span {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  color: #111;
-  font-size: 0.8rem;
-  font-weight: 900;
-  padding: 8px;
+.qr img {
+  border-radius: 10px;
+  display: block;
+  height: 100%;
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: 100%;
 }
 
 .rules {
