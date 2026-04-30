@@ -247,8 +247,8 @@ function renderHome() {
       <section class="hero">
         <div class="hero-copy">
           <div class="eyebrow">Private focus rooms for friends</div>
-          <h1>The Stakeout</h1>
-          <p class="lede">Compete with your friends to actually study. Set your stakes, pair your phone, keep cameras on, and watch the scoreboard call out distractions in real time.</p>
+          <h1><span>The</span> Stakeout</h1>
+          <p class="lede">Compete with your friends to actually study. Set your stakes, pair your phone, keep cameras on, and let the scoreboard call out every distraction.</p>
           <form class="join-box" data-join-form>
             <input name="code" maxlength="16" placeholder="Enter room code" aria-label="Room code" />
             <button class="button primary" type="submit">Join</button>
@@ -258,11 +258,28 @@ function renderHome() {
             <button class="button secondary" data-demo-room>Try demo room</button>
           </div>
         </div>
-        <div class="hero-visual" aria-label="Students studying together">
+        <div class="hero-visual" aria-label="Live focus competition preview">
+          <div class="orbit-card orbit-card-a">
+            <span class="glass-icon">1000</span>
+            <strong>Start locked</strong>
+            <p>Everyone enters with the same score.</p>
+          </div>
+          <div class="orbit-card orbit-card-b">
+            <span class="glass-icon">-100</span>
+            <strong>Phone pickup</strong>
+            <p>Motion hits the feed instantly.</p>
+          </div>
+          <div class="orbit-card orbit-card-c">
+            <span class="glass-icon">+50</span>
+            <strong>Clean finish</strong>
+            <p>No penalties, bonus points.</p>
+          </div>
           <div class="score-float">
-            <div>
-              <h3>Live accountability</h3>
-              <p class="muted small">Phone movement, disconnects, and camera-off time become transparent score events.</p>
+            <div class="ticker">
+              <span>FOCUS ROOM</span>
+              <span>PHONE DOWN</span>
+              <span>CAMERA ON</span>
+              <span>STAKES SET</span>
             </div>
             <div class="mini-score">
               <span>Maya stayed locked in</span>
