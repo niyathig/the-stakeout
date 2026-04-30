@@ -505,6 +505,32 @@ h3 {
   gap: 16px;
 }
 
+.score-rules-details {
+  background: rgba(255, 255, 255, 0.42);
+  border: 2px solid rgba(7, 7, 7, 0.16);
+  border-radius: 16px;
+  margin-top: 4px;
+  padding: 10px 12px;
+}
+
+.score-rules-details summary {
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.score-rules-lowkey {
+  background: transparent;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.score-rules-lowkey .eyebrow,
+.score-rules-lowkey h3 {
+  display: none;
+}
+
 .score-rules-compact {
   margin-top: 14px;
 }
@@ -519,6 +545,10 @@ h3 {
   grid-template-columns: 1fr;
 }
 
+.score-rules-lowkey .score-rule-list {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .score-rule {
   align-items: center;
   background: rgba(255, 255, 255, 0.62);
@@ -530,6 +560,17 @@ h3 {
   padding: 10px;
 }
 
+.score-rules-lowkey .score-rule {
+  background: rgba(255, 255, 255, 0.38);
+  border-color: rgba(7, 7, 7, 0.1);
+  grid-template-columns: 48px minmax(0, 1fr);
+  padding: 8px;
+}
+
+.score-rules-lowkey .score-rule p {
+  display: none;
+}
+
 .score-rule > span {
   align-items: center;
   border-radius: 12px;
@@ -537,6 +578,11 @@ h3 {
   font-weight: 950;
   height: 42px;
   justify-content: center;
+}
+
+.score-rules-lowkey .score-rule > span {
+  border-radius: 10px;
+  height: 34px;
 }
 
 .score-rule > span.good {
@@ -909,7 +955,8 @@ h3 {
 
   .video-grid,
   .segmented,
-  .score-rule-list {
+  .score-rule-list,
+  .score-rules-lowkey .score-rule-list {
     grid-template-columns: 1fr;
   }
 

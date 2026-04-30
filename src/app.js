@@ -471,6 +471,7 @@ function renderRoom(roomId) {
               <button class="button primary" data-ready>${localPlayer?.ready ? "Unready" : "Ready"}</button>
               <button class="button primary" data-start ${canStart(room, localPlayer) ? "" : "disabled"}>${icons.play} Start session</button>
             </div>
+            ${scoreRulesDetails()}
           </div>
         </div>
         <aside class="panel">
@@ -478,7 +479,6 @@ function renderRoom(roomId) {
           <div class="copy-code"><span>${room.code}</span><button class="icon-button" title="Copy invite link" data-copy="${inviteUrl}">${icons.copy}</button></div>
           <div class="card" style="margin-top: 14px"><h3>Set your stakes</h3><p class="muted">${escapeHtml(room.stakesText)}</p></div>
           <div class="card" style="margin-top: 14px"><h3>Duration</h3><p class="muted">${room.durationMinutes} minutes · ${breakLabel(room.breakMode)}</p></div>
-          ${scoreRulesCard("compact")}
           <h3 style="margin-top: 16px">Phone pairing</h3>
           <div class="qr">
             <img src="${qrCodeUrl(shortPhoneUrl || phoneUrl)}" alt="QR code for phone pairing link" />
@@ -539,6 +539,19 @@ function bindRoomActions(room, localPlayer) {
 }
 
 function scoreRulesCard(mode = "full") {
+  return scoreRulesShell("article", `card score-rules ${mode === "compact" ? "score-rules-compact" : ""}`);
+}
+
+function scoreRulesDetails() {
+  return `
+    <details class="score-rules-details">
+      <summary>How scoring works</summary>
+      ${scoreRulesShell("div", "score-rules score-rules-lowkey")}
+    </details>
+  `;
+}
+
+function scoreRulesShell(tag, className) {
   const rules = [
     ["Start", "1000", "Everyone begins even."],
     ["Small movement", "0", "First warning only."],
@@ -550,7 +563,7 @@ function scoreRulesCard(mode = "full") {
     ["Clean finish", "+50", "No penalties by the end."],
   ];
   return `
-    <article class="card score-rules ${mode === "compact" ? "score-rules-compact" : ""}">
+    <${tag} class="${className}">
       <div>
         <div class="eyebrow">Scoring</div>
         <h3>How points move</h3>
@@ -560,7 +573,7 @@ function scoreRulesCard(mode = "full") {
           .map(([label, delta, detail]) => `<div class="score-rule"><span class="${Number(delta) < 0 ? "bad" : Number(delta) > 0 ? "good" : "neutral"}">${delta}</span><div><strong>${label}</strong><p class="small muted">${detail}</p></div></div>`)
           .join("")}
       </div>
-    </article>
+    </${tag}>
   `;
 }
 
