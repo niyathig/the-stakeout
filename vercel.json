@@ -1,31 +1,31 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "public",
+  "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
+  "builds": [
     {
-      "source": "/q/:token",
-      "destination": "/phone/:token",
-      "permanent": false
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "public"
+      }
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/create",
-      "destination": "/index.html"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "source": "/room/:roomId",
-      "destination": "/index.html"
+      "handle": "filesystem"
     },
     {
-      "source": "/join/:code",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/phone/:token",
-      "destination": "/index.html"
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }

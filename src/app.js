@@ -124,6 +124,7 @@ function parseRoute() {
   if (path === "/create") return { name: "create" };
   if (path.startsWith("/room/")) return { name: "room", roomId: path.split("/")[2] };
   if (path.startsWith("/phone/")) return { name: "phone", token: path.split("/")[2] };
+  if (path.startsWith("/q/")) return { name: "phone", token: path.split("/")[2] };
   if (path.startsWith("/join/")) return { name: "join", code: path.split("/")[2] };
   if (params.get("join")) return { name: "join", code: params.get("join") };
   return { name: "home" };
