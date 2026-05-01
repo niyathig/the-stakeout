@@ -21,19 +21,7 @@
       "dest": "/api/rooms.js"
     },
     {
-      "src": "/q/(.*)",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/(create|room/.*|join/.*|phone/.*)",
-      "dest": "/index.html"
-    },
-    {
       "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ]
 }

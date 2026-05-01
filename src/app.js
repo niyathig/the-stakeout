@@ -88,6 +88,10 @@ function getShareOrigin() {
     localStorage.setItem("stakeout.shareOrigin", location.origin);
     return location.origin;
   }
+  if (!isLocalHost(location.hostname) && saved !== location.origin) {
+    localStorage.setItem("stakeout.shareOrigin", location.origin);
+    return location.origin;
+  }
   if (isLocalHost(location.hostname) && (!saved || isLocalOrigin(saved))) {
     localStorage.setItem("stakeout.shareOrigin", DEFAULT_PUBLIC_ORIGIN);
     return DEFAULT_PUBLIC_ORIGIN;
@@ -126,6 +130,8 @@ function parseRoute() {
   if (path.startsWith("/phone/")) return { name: "phone", token: path.split("/")[2] };
   if (path.startsWith("/q/")) return { name: "phone", token: path.split("/")[2] };
   if (path.startsWith("/join/")) return { name: "join", code: path.split("/")[2] };
+  if (params.get("phone")) return { name: "phone", token: params.get("phone") };
+  if (params.get("p")) return { name: "phone", token: params.get("p") };
   if (params.get("join")) return { name: "join", code: params.get("join") };
   return { name: "home" };
 }
@@ -447,9 +453,9 @@ function renderRoom(roomId) {
 
   const localPlayer = getLocalPlayer(room);
   const shareOrigin = getShareOrigin();
-  const inviteUrl = `${shareOrigin}/join/${room.code}`;
+  const inviteUrl = `${shareOrigin}/?join=${encodeURIComponent(room.code)}`;
   const phoneUrl = localPlayer ? `${shareOrigin}/phone/${localPlayer.pairingToken}` : "";
-  const shortPhoneUrl = localPlayer ? `${shareOrigin}/q/${localPlayer.pairingToken}` : "";
+  const shortPhoneUrl = localPlayer ? `${shareOrigin}/?p=${encodeURIComponent(localPlayer.pairingToken)}` : "";
   setHtml(`
     <main class="page">
       <section class="room-layout">
