@@ -13,6 +13,7 @@ let currentRoute = parseRoute();
 let localStream = null;
 let renderTimer = null;
 let motionState = { lastMagnitude: 0, warningSent: false, permission: "idle" };
+const DEMO_VIDEO_URL = "https://www.loom.com/share/f8752eb591fe4cdabf1ab60ecfe76bd7";
 
 const icons = {
   camera: "◉",
@@ -146,7 +147,7 @@ function setHtml(html) {
         </a>
         <nav class="nav-actions">
           <a class="button ghost" href="/" data-link>Home</a>
-          <a class="button ghost" href="#demo-video">Demo video</a>
+          <a class="button ghost" href="${DEMO_VIDEO_URL}" target="_blank" rel="noreferrer">Demo video</a>
           <button class="button ghost" data-demo-room>Load demo</button>
           <button class="button secondary" data-reset-prototype>Reset</button>
           <a class="button secondary" href="/create" data-link>Create room</a>
@@ -281,7 +282,7 @@ function renderHome() {
           </form>
           <div class="button-row">
             <a class="button primary" href="/create" data-link>Create Room</a>
-            <a class="button secondary" href="#demo-video">Watch demo video</a>
+            <a class="button secondary" href="${DEMO_VIDEO_URL}" target="_blank" rel="noreferrer">Watch demo video</a>
           </div>
         </div>
         <div class="hero-visual" aria-label="Live focus competition preview">
@@ -332,7 +333,7 @@ function renderHome() {
           <div class="eyebrow">Demo video</div>
           <h2>See the room in motion.</h2>
         </div>
-        <a class="button primary" href="#demo-video">Video slot ready</a>
+        <a class="button primary" href="${DEMO_VIDEO_URL}" target="_blank" rel="noreferrer">Watch on Loom</a>
       </section>
     </main>
   `);
