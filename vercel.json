@@ -17,8 +17,16 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "src": "/api/rooms",
+      "dest": "/api/rooms.js"
+    },
+    {
+      "src": "/q/(.*)",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/(create|room/.*|join/.*|phone/.*)",
+      "dest": "/index.html"
     },
     {
       "handle": "filesystem"
